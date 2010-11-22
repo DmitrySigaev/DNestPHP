@@ -1,0 +1,558 @@
+"General"
+{
+"ProjectType" = "local"
+"AutoLoadTemplate" = "%s.php;class.%s.php;"
+"IncludeDirs" = ""
+}
+"Configurations"
+{
+    "Local|PHP 5.2"
+    {
+    }
+    "Staging|PHP 5.2"
+    {
+    }
+    "Production|PHP 5.2"
+    {
+    }
+}
+"Files"
+{
+    "libraries\\phputf8\\native\\strlen.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\utils\\ascii.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\native"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\utils\\patterns.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\manual\\manual.htm"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manual\\js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "files\\default.htma.htm"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\example\\example_modify_contents.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\component.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "example\\scraping\\example_scraping_digg.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "files\\default.htma.htma.htm"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\manual\\img"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\category.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\example\\scraping\\example_scraping_digg.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\module.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\mbstring\\core.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "example"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\filter\\filterinput.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\filesystem\\index.html"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\ucwords.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manual\\manual_faq.htm"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manual\\css\\ui.tabs.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\simple_html_dom.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "files"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\user.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\manual\\manual_faq.htm"
+    {
+    "ProjRelPath" = "T"
+    }
+    "example\\simple_html_dom_utility.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\TODO.tsk"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\str_split.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "includes"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\manual\\img\\tab.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\stristr.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\manual\\js\\jquery-1.2.3.pack.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\mbstring"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\utils\\specials.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\example\\example_extract_html.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manual\\js\\jquery-1.2.3.pack.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\database\\index.html"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\utils\\index.html"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manual\\css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "example\\scraping"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\native\\index.html"
+    {
+    "ProjRelPath" = "T"
+    }
+    "example\\example_basic_selector.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\example\\scraping\\example_scraping_imdb.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\substr_replace.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\native\\core.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\base"
+    {
+    "ProjRelPath" = "T"
+    }
+    "test.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\README"
+    {
+    "ProjRelPath" = "T"
+    }
+    "example\\example_callback.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\manual\\js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "example\\scraping\\example_scraping_slashdot.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\utilities\\string.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\utilities"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\aro.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\LICENSE"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\database"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\str_ireplace.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\example\\scraping"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\arogroup.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\filter\\index.html"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\filter\\filteroutput.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\example\\example_callback.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\menu.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\strspn.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "example\\example_advanced_selector.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\database\\mysqli.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\manual\\css\\default.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manual\\css\\default.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manual\\img"
+    {
+    "ProjRelPath" = "T"
+    }
+    "example\\example_extract_html.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\utils\\unicode.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "files\\default.htm"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\filesystem\\path.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\database.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\session.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "includes\\framework.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\example\\example_advanced_selector.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\mbstring\\strlen.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\trim.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manual\\manual.htm"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\content.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\index.html"
+    {
+    "ProjRelPath" = "T"
+    }
+    "includes\\defines.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\example\\example_basic_selector.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\mbstring\\case.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\menutypes.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\utf8.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\index.html"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\manual\\css\\ui.tabs.css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\manual\\js\\ui.tabs.pack.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\strcspn.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\base\\index.html"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\example"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\filter"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\utils\\bad.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\filesystem"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\index.html"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\strcasecmp.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\utils"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\database\\mysql.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\recordset.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\manual\\css"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\plugin.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manual\\manual_api.htm"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\factory.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "example\\scraping\\example_scraping_imdb.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\example\\simple_html_dom_utility.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\base\\object.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manual\\js\\ui.tabs.pack.js"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\manual\\manual_api.htm"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\ucfirst.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manual\\img\\tab.png"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\manual"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\import.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manual"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\utilities\\date.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\utils\\validation.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\mbstring\\index.html"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\simplehtmldom\\example\\scraping\\example_scraping_slashdot.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\loader.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\native\\case.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\dnest\\database\\table\\section.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "example\\example_modify_contents.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\phputf8\\strrev.php"
+    {
+    "ProjRelPath" = "T"
+    }
+}
+"ProjStartupServices"
+{
+}
+"Globals"
+{
+}
+"References"
+{
+}

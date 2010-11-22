@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!-- $Id -->
+<metafile version="1.5" client="site">
+	<name>Russian (Russian Federation)</name>
+	<tag>ru-RU</tag>
+	<version>1.5.18</version>
+	<creationDate>31.05.2010</creationDate>
+	<author>Joom.ru - Russian Home of Joomla!</author>
+	<authorEmail>team@joom.ru</authorEmail>
+	<authorUrl>www.joom.ru</authorUrl>
+	<copyright>Авторские права (C) 2006 - 2010 Joom.ru - Русский Дом Joomla! Все права защищены.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<description/>
+	<metadata>
+		<name>Русский (Russian Federation)</name>
+		<tag>ru-RU</tag>
+		<rtl>0</rtl>
+		<locale>ru_RU.utf8, ru_RU.UTF-8, ru_RU, ru_RU.KOI8-R, ru_RU.CP1251, ru_RU.CP866, ru_RU.ISO8859-5, russian, ru_RU, ru, rus, Russian</locale>
+		<winCodePage>utf-8</winCodePage>
+		<backwardLang>russian</backwardLang>
+		<pdfFontName>freesans</pdfFontName>
+	</metadata>
+	<params/>
+</metafile>

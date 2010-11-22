@@ -33,6 +33,8 @@ class JTableContent extends JTable
 	var $mask				= null;
 	/** @var int */
 	var $catid				= null;
+	/** @var int */
+	var $subcatid				= null;
 	/** @var datetime */
 	var $created				= null;
 	/** @var int User id*/

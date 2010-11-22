@@ -58,6 +58,55 @@ class JFilterOutput
 		$regex = 'href="([^"]*(&(amp;){0})[^"]*)*?"';
 		return preg_replace_callback( "#$regex#i", array('JFilterOutput', '_ampReplaceCallback'), $input );
 	}
+	
+
+	function transliterateRuToEngSpecial($st)
+	{
+		// windows-1251 кодировка
+		// Сначала заменяем "односимвольные" фонемы.
+		$st=strtr($st,"абвгдеёзийклмнопрстуфхъыэ_",
+			"abvgdeeziyklmnoprstufh'iei");
+		$st=strtr($st,"АБВГДЕЁЗИЙКЛМНОПРСТУФХЪЫЭ_",
+			"ABVGDEEZIYKLMNOPRSTUFH'IEI");
+		// Затем - "многосимвольные".
+		$st=strtr($st, 
+			array(
+					"ж"=>"zh", "ц"=>"ts", "ч"=>"ch", "ш"=>"sh", 
+					"щ"=>"shch","ь"=>"", "ю"=>"yu", "я"=>"ya",
+					"Ж"=>"ZH", "Ц"=>"TS", "Ч"=>"CH", "Ш"=>"SH", 
+					"Щ"=>"SHCH","Ь"=>"", "Ю"=>"YU", "Я"=>"YA",
+					"ї"=>"i", "Ї"=>"Yi", "є"=>"ie", "Є"=>"Ye"
+					)
+				);
+		// Возвращаем результат.
+		return $st;
+	}
+
+    function transliterateRuToEng($string)
+	{
+		$string = JString::transcode($string,'utf-8', 'windows-1251');
+		$string = htmlentities(JFilterOutput::transliterateRuToEngSpecial($string));
+		$string = preg_replace(
+			array('/&szlig;/','/&(..)lig;/', '/&([aouAOU])uml;/','/&(.)[^;]*;/'),
+			array('ss',"$1","$1".'e',"$1"),
+			$string);
+		return $string;
+	}
+
+	function transliterateRuToEngUrl($string)
+	{
+		//remove any '-' from the string they will be used as concatonater
+		$str = str_replace('-', ' ', $string);
+
+		$str = JFilterOutput::transliterateRuToEng($str);
+
+		// remove any duplicate whitespace, and ensure all characters are alphanumeric
+		$str = preg_replace(array('/\s+/','/[^A-Za-z0-9\-]/'), array('-',''), $str);
+
+		// lowercase and trim
+		$str = trim(strtolower($str));
+		return $str;
+	}
 
 	function transliterate($string)
 	{
