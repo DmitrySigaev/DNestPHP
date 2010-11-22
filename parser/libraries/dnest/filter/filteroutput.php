@@ -85,11 +85,26 @@ class JFilterOutput
     function transliterateRuToEng($string)
 	{
 		$string = JString::transcode($string,'utf-8', 'windows-1251');
+		$string = preg_replace(
+			array('/&(.)[^;]*quo;/','/&amp;/'),
+			array('',''),
+			$string);
 		$string = htmlentities(JFilterOutput::transliterateRuToEngSpecial($string));
 		$string = preg_replace(
-			array('/&szlig;/','/&(..)lig;/', '/&([aouAOU])uml;/','/&(.)[^;]*;/'),
-			array('ss',"$1","$1".'e',"$1"),
+			array('/&(.)[^;]*quo;/','/&amp;/','/&szlig;/','/&(..)lig;/', '/&([aouAOU])uml;/','/&(.)[^;]*;/'),
+			array('','','ss',"$1","$1".'e',"$1"),
 			$string);
+		return $string;
+	}
+
+	function deletingExtraSymbolUTF($string)
+	{
+		$string = JString::transcode($string,'utf-8', 'windows-1251');
+		$string = preg_replace(
+			array('/&(.)[^;]*quo;/','/&amp;/'),
+			array('',''),
+			$string);
+		$string = JString::transcode($string, 'windows-1251','utf-8');
 		return $string;
 	}
 

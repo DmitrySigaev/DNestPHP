@@ -15,21 +15,30 @@ require_once (DNEST_PATH_LIBRARIES.DS.'simplehtmldom'.DS.'simple_html_dom.php');
 
 
 
-function directoryToArray($directory, $recursive, $cmp_str)
+function directoryToArray($directory, $dest_dir, $recursive, $method)
 {
+	$save = 0;
 	if ($handle = opendir($directory)) {
 		while (false !== ($file = readdir($handle))) {
 			if ($file != "." && $file != "..") 
 			{
-				if (is_dir($directory. "/" . $file)) 
+				if (is_dir($directory. DS . $file)) 
 				{
 					if($recursive)
 					{
-						directoryToArray($directory. "/" . $file, $recursive, $cmp_str);
+						if (strpos($method,"copy") !== false || strpos($method,"move") !== false)
+							mkdir($dest_dir.DS.$file);
+						$s = directoryToArray($directory.DS.$file, $dest_dir.DS.$file, $recursive, $method);
+						if (strpos($method,"move") !== false && !$s)
+						{
+							rename($directory.DS.$file, $dest_dir.DS.$file);
+							rmdir($directory.DS.$file);
+						}
+						
 					}
-					$file = $directory . "/" . $file;
+					$file = $directory . DS . $file;
 					if (strpos($file,".htm") !== false)
-					{
+					{	
 						echo $file."\n";
 					}
 				} 
@@ -38,17 +47,46 @@ function directoryToArray($directory, $recursive, $cmp_str)
 					if (strpos($file,".htm") !== false)
 					{
 						$status = ParseMyProject($directory, $file);
-						echo $directory . "/" . $file.$status." ";
+						if($status === 1 && (strpos($method,"prolong") !== false))
+							unlink($directory . DS . $file);
+						else if (strpos($method,"move") !== false)
+							rename($directory.DS.$file, $dest_dir.DS.$file);
 					}
+					if (strpos($file,".jpg") !== false)
+					{
+						$save = 1;
+					}
+					if (strpos($file,".png") !== false)
+					{
+						$save = 1;
+					}
+					if (strpos($file,".gif") !== false)
+					{
+						$save = 1;
+					}
+					if (strpos($file,".flv") !== false)
+					{
+						$save = 1;
+					}
+					if (strpos($file,".WD3") !== false)
+						unlink($directory . DS . $file);
+					if (strpos($file,".ru") !== false)
+						unlink($directory . DS . $file);
+					if (strpos($file,".su") !== false)
+						unlink($directory . DS . $file);
+					if (strpos($file,".net") !== false)
+						unlink($directory . DS . $file);
+					if (strpos($file,".org") !== false)
+						unlink($directory . DS . $file);
+					if (strpos($file,".com") !== false)
+						unlink($directory . DS . $file);
 				}
 			}
 		}
 		closedir($handle);
 	}
+	return $save;
 }
-
-directoryToArray("C:\\download\\www.zagorod.spb.ru\\articles\\", true, 1);
-//directoryToArray(".", true, 1);
 
 function getName($file_img) {
 	$file_img = str_replace(DS, '/', $file_img);
@@ -112,10 +150,25 @@ function ParseMyProject($directory, $file)
 		$rubriki = str_get_html($e->innertext);
 		$a_tag = $rubriki->find('a');
 		foreach ($a_tag as $value) {
-			$str_utf = JString::transcode($value->innertext,$charset,'utf-8');
-			$array_categoty_alias[] =  JFilterOutput::transliterateRuToEngUrl($str_utf);
-			$array_categoty_utf[] = $str_utf;
-			$array_categoty[] = $value->innertext;
+			$str_category = $value->innertext; 
+			// удаляем ненужные символы их названия
+			$str_category = preg_replace(
+				array('/&(.)[^;]*quo;/','/&amp;/'),
+				array('',''),
+				$str_category);			
+			$str_utf = JString::transcode($str_category,$charset,'utf-8');
+			$array_categoty_utf[] = $str_utf; // сохраняем в ютиф форме
+			$array_categoty[] = $str_category; // сохраняем в виндойс кодировке для ставнения в дальнейшем
+// old			$array_categoty_alias[] =  JFilterOutput::transliterateRuToEngUrl($str_utf);
+
+			$categoty_alias = JFilterOutput::transliterateRuToEngUrl($str_utf);
+			$initial = array("/^stati$/", "/^zagorodniy-otdih$/", "/^inzhenernie-sistemi$/", "/^stroitelstvo$/", "/^landshaft$/", "/^nedvizhimost$/", "/^interer$/");
+			$dictionary   = array("articles", "holidays", "engineering", "construction", "landscape", "realty", "interior");
+			$str_translated = preg_replace($initial, $dictionary, $categoty_alias);
+			if(isset($str_translated))
+				$array_categoty_alias[] = $str_translated;
+			else
+				$array_categoty_alias[] = $categoty_alias;
 		}
 		
 	}
@@ -136,12 +189,56 @@ function ParseMyProject($directory, $file)
 	// порядок $row->ordering старая позже
 	
 	// просмотры
-	$e = $html->find('p[class=service]', 0);
-	if(isset($e))
+	$hits = 0;
+	$p_tags = $html->find('p[class="service"]'); // tag problem: minor service
+	if(isset($p_tags))
 	{
-		$str = preg_replace('/[^0-9]/', '', $e->innertext);
-		$hits = intval($str);
+		foreach ($p_tags as $value) {
+			if($value->attr['class'] === "service")
+			{
+				$str = preg_replace('/[^0-9]/', '', $value->innertext);
+				$hits = intval($str);
+			}
+			if($value->attr['class'] === "minor service")
+			{
+				$is_the_last = $value->next_sibling();
+				if(!isset($is_the_last))
+				{
+					$e1 = $value->nodes[0];
+					$e1->outertext =$e1->outertext."</p>";
+					$html_str =	$html->root->innertext();
+					$html = str_get_html($html_str);
+					//				$hits = intval($str);
+				}
+
+			}
+			
+		}
 	}
+	// проверяем изменения...
+	$p_tags = $html->find('p[class="service"]'); // tag problem: minor service
+	if(isset($p_tags))
+	{
+		foreach ($p_tags as $value) {
+			if($value->attr['class'] === "service")
+			{
+				$str = preg_replace('/[^0-9]/', '', $value->innertext);
+				$hits = intval($str);
+			}
+			if($value->attr['class'] === "minor service")
+			{
+				$is_the_last = $value->next_sibling();
+				if(!isset($is_the_last))
+				{
+					$e1 = $value->nodes[0];
+					$e1->outertext =$e1->outertext."</p>";
+					//				$hits = intval($str);
+				}
+
+			}
+			
+		}
+	}	
 	// статьи
 	$e = $html->find('div[id=article]', 0);
 	if(isset($e))
@@ -157,8 +254,21 @@ function ParseMyProject($directory, $file)
 		$e = $html->find('h1', 0);
 		if(isset($e))
 		{
-			$title = $e->innertext;
-			$alias =  JFilterOutput::transliterateRuToEngUrl($e->innertext);
+			$title_html = str_get_html($e->innertext);
+			$br = $title_html->find('br'); // удаляем бр
+			foreach ($br as $value)
+			{
+				$value->outertext = ' ';
+			}
+			$br = $title_html->find('span'); // удаляем бр
+			foreach ($br as $value)
+			{
+				$value->outertext = $value->innertext;
+			}
+			$alias_process = $title_html->root->outertext;
+
+			$title = JFilterOutput::deletingExtraSymbolUTF($e->innertext);
+			$alias =  JFilterOutput::transliterateRuToEngUrl($alias_process);
 			echo $alias;
 		}
 		
@@ -175,7 +285,11 @@ function ParseMyProject($directory, $file)
 			$full_filename = $value->attr['src'];
 			if ( !file_exists( $full_filename ) )
 			{
-				echo "Внимание! Файл ".$$full_filename." не сужествет";
+				$full_filename = $directory.DS.$full_filename;				
+				$full_filename = str_replace(DS, '/', $full_filename);
+				$full_filename = str_replace('//', '/', $full_filename);
+				if ( !file_exists( $full_filename ) )
+					echo "Внимание! Файл ".$$full_filename." не сужествет";
 			}
 			$file_img = getName($full_filename);
 			$path_img = DNEST_PATH_BASE .DS.'images'.DS;
@@ -345,47 +459,59 @@ function ParseMyProject($directory, $file)
 // ---------------------------------
 */
 
-		$nullDate = $db->getNullDate();
-		$createdate =& JFactory::getDate();		
-				
-		$row = & JTable::getInstance('content');
-		$row->load(0);
-		//file_put_contents('default_save.htm', $e->outertext);
-		$row->title = $title;
-		$row->alias = $alias;
-//		$row->introtext = 'text';
-//		$row->fulltext = 'fulltext';
-
-		$row->introtext = $introtext;
-		$row->fulltext = $http_article;
-
-		$row->sectionid = $id_section[0];
-		$row->catid = $id_section[1];
-		$row->subcatid = $id_section[2];
-
-		$row->images = array ();
-		if(!isset($date_created))
+		$query = 'SELECT id'
+			. ' FROM #__content'
+			. ' WHERE alias = "'.$alias.'"';
+		;
+		$db->setQuery( $query );
+		$id_content = $db->loadResult();					
+		//		если существует такая статья в базе, то ничего не делаем
+		//-----			
+		
+//		if(!isset($id_content))
 		{
-			$date_created = $createdate->toMySQL();
-		}
-		$row->publish_up = $date_created;
-		$row->publish_down = $nullDate;
-		$row->created = $date_created; //$createdate->toMySQL();
-		$row->modified = $nullDate;
-		$row->hits =$hits;
-		$row->state = 1; // публиковать
-		$row->created_by = 62;
-		$row->created_by_alias = $created_by_alias;
-				
-		$row->metakey = JString::transcode($keywords_str,$charset,'utf-8');
-		$row->metadesc = JString::transcode($description_str, $charset,'utf-8');
-		if (!$row->check()) {
-			echo "error data";
-		}
-		if (!$row->store()) {
-			echo " save error";
-		}
+			$nullDate = $db->getNullDate();
+			$createdate =& JFactory::getDate();		
+			
+			$row = & JTable::getInstance('content');
+			$row->load(0);
+			//file_put_contents('default_save.htm', $e->outertext);
+			$row->title = $title;
+			$row->alias = $alias;
+			//		$row->introtext = 'text';
+			//		$row->fulltext = 'fulltext';
 
+			$row->introtext = $introtext;
+			$row->fulltext = $http_article;
+
+			$row->sectionid = $id_section[0];
+			$row->catid = $id_section[1];
+			$row->subcatid = $id_section[2];
+
+			$row->images = array ();
+			if(!isset($date_created))
+			{
+				$date_created = $createdate->toMySQL();
+			}
+			$row->publish_up = $date_created;
+			$row->publish_down = $nullDate;
+			$row->created = $date_created; //$createdate->toMySQL();
+			$row->modified = $nullDate;
+			$row->hits =$hits;
+			$row->state = 1; // публиковать
+			$row->created_by = 62;
+			$row->created_by_alias = $created_by_alias;
+			
+			$row->metakey = JString::transcode($keywords_str,$charset,'utf-8');
+			$row->metadesc = JString::transcode($description_str, $charset,'utf-8');
+			if (!$row->check()) {
+				echo "error data";
+			}
+			if (!$row->store()) {
+				echo " save error";
+			}
+		}
+		$ret_val = 1;
 	}
 	return $ret_val;
 }
@@ -404,4 +530,11 @@ function InsertArticles()
 	}
 
 }
+
+
+//directoryToArray("C:\\SITE\\www.zagorod.spb.ru\\articles", "C:\\SITE2",true,"prolong&&move");
+directoryToArray(".", "C:\\SITE2",true, "test");
+//directoryToArray(".", true, 1, 0);
+
+
 ?>
