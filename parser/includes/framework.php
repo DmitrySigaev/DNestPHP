@@ -17,4 +17,7 @@ defined( '_DNEST_EXEC' ) or die( 'Restricted access' );
 require_once(DNEST_PATH_LIBRARIES.DS.'dnest'.DS.'import.php');
 
 jimport( 'dnest.utilities.string' );
+//jimport( 'dnest.database.database' );
+//jimport( 'dnest.database.table' );
+
 ?>

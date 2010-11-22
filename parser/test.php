@@ -12,6 +12,9 @@ require_once (DNEST_PATH_LIBRARIES.DS.'simplehtmldom'.DS.'simple_html_dom.php');
 //;include('simple_html_dom.php');
 
 
+
+
+
 function directoryToArray($directory, $recursive, $cmp_str)
 {
 	if ($handle = opendir($directory)) {
@@ -46,7 +49,7 @@ function directoryToArray($directory, $recursive, $cmp_str)
 }
 
 directoryToArray(".", true, 1);
-
+InsertArticles();
 
 
 function ParseMyProject($file_html)
@@ -95,4 +98,18 @@ function ParseMyProject($file_html)
 	return $ret_val;
 }
 
+function InsertArticles()
+{
+	$db = & JFactory::getDBO();
+	$row = & JTable::getInstance('content');
+	$row->load(1);
+	$row->created_by_alias = "Dmitry Sigaev";
+	if (!$row->check()) {
+		echo "error data";
+	}
+	if (!$row->store()) {
+		echo " save error";
+	}
+
+}
 ?>
