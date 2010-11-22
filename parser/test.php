@@ -47,7 +47,8 @@ function directoryToArray($directory, $recursive, $cmp_str)
 	}
 }
 
-directoryToArray(".", true, 1);
+directoryToArray("C:\\download\\www.zagorod.spb.ru\\articles\\", true, 1);
+//directoryToArray(".", true, 1);
 
 function getName($file_img) {
 	$file_img = str_replace(DS, '/', $file_img);
@@ -118,6 +119,20 @@ function ParseMyProject($directory, $file)
 		}
 		
 	}
+	
+	// время статьи 
+	$e = $html->find('div[class="border date"]', 0);	
+	if(isset($e))
+	{
+		$date_created = $e->innertext;
+//		$day_month_year = preg_split('/[/\.\-]/', $date_created);
+//		$day_month_year = preg_split("/[\/\.\-,]+/", $date_created);
+		list($day,$month, $year) = preg_split("/[\/\.\-,]+/", $date_created);
+		$date_created = $year."-"."$month"."-".$day." ".date("H:i:s");    
+		
+		//		list($day,$month, $year) = preg_split('/./', $date_created);
+	}
+	
 	// порядок $row->ordering старая позже
 	
 	// просмотры
@@ -191,6 +206,19 @@ function ParseMyProject($directory, $file)
 			$value->attr['src'] =  "images/articles/".$file_img;
 		}
 		
+		$a_str = $html->find('a');
+		foreach ($a_str as $value)
+		{
+			$link = $value->attr['href'];
+			if (isset($link))
+			{
+				if (strpos($link,"tags") !== false)
+				{
+					$in_text = $value->innertext;
+					$value->outertext = $in_text;
+				}
+			}
+		}		
 		
 		$e = $html->find('div[class=direct]', 0);
 		if(isset($e))
@@ -203,26 +231,84 @@ function ParseMyProject($directory, $file)
 			{ 
 				$e->outertext = '<div class="advert"> </div>';
 			}
-			
-			$e = $html->find('p[class=author]',0);
+		}
+		$e = $html->find('p[class=author]',0);
+		if(isset($e))
+		{
+			echo $created_by_alias = $e->innertext;
+//			$e1 = $e->next_sibling();
+//			$e1->outertext = '';
+		}
+//		else //два различных варианта: убираем гавно...
+		{
+			$e = $html->find('div[class=service]', 0);
 			if(isset($e))
 			{
-				echo $created_by_alias = $e->innertext;
-				$e1 = $e->next_sibling();
-				$e1->outertext = '';
+				if($e->parent()->getAttribute('style') != null)
+					$e->parent()->outertext = '';
+				
 			}
 		}
-		$html->save($file_html."a.htm");
+		
+//		$html->save($file_html."a.htm");
 		// save all changes
 		$http_article = $html->innertext;
 		
 		$db = & JFactory::getDBO();
 //-------------------------
+		
+		$in_2 = sizeof($array_categoty);
+		if($array_categoty[$in_2 - 1] == "Главная")
+			$in_2--;
+		$max_s_c = $in_2;
+		$sec_cat = array ("sections", "categories", "subcategories");
+		$sec_cat2 = array ("section", "category", "subcategory");
 
+		for (; $in_2 != 0; $in_2--)
+		{
+			$in_2i = $max_s_c-$in_2;
+			$from_table = $sec_cat[$in_2i];
+			
+			$query = 'SELECT id'
+				. ' FROM #__'.$from_table
+				. ' WHERE alias = "'.$array_categoty_alias[$in_2-1].'"';
+			;
+			$db->setQuery( $query );
+			$id_section[$in_2i] = $db->loadResult();
+			// если существуетуже такаю категория в базе, то ничего не делаем
+
+
+			if(!isset($id_section[$in_2i]))
+			{
+				$row_s = & JTable::getInstance($sec_cat2[$in_2i]);
+				$row_s->load(0);
+				$row_s->title = $array_categoty_utf[$in_2-1];
+				$row_s->alias = $array_categoty_alias[$in_2-1];
+				if(!($in_2i))
+					$row_s->scope = "content";
+				$row_s->published = 1;
+				if (!$row_s->check()) {
+					echo "error data";
+				}
+				if (!$row_s->store()) {
+					echo " save error";
+				}
+				// where was insert
+				$query = 'SELECT id'
+					. ' FROM #__'.$from_table
+					. ' WHERE alias = "'.$array_categoty_alias[$in_2-1].'"';
+				;
+				$db->setQuery( $query );
+				$id_section[$in_2i] = $db->loadResult();					
+			}
+		}
+		/*
+///---------------				
+			
 		$in = 0;
 		for (; $array_categoty[$in] != "Главная" && $in < 5; $in++);
 		echo $in;
-		
+
 		if($in >= 4)
 			$in = 0;
 		$query = 'SELECT id'
@@ -257,16 +343,10 @@ function ParseMyProject($directory, $file)
 			$id_section = $db->loadResult();					
 		}
 // ---------------------------------
-
+*/
 
 		$nullDate = $db->getNullDate();
-		$now	=& JFactory::getDate();
-		$config =& JFactory::getConfig();
-		$publish_up =& JFactory::getDate($row->publish_up);
-		$publish_down =& JFactory::getDate($row->publish_down);
-		$publish_up->setOffset($config->getValue('config.offset'));
-		$publish_down->setOffset($config->getValue('config.offset'));
-		
+		$createdate =& JFactory::getDate();		
 				
 		$row = & JTable::getInstance('content');
 		$row->load(0);
@@ -278,9 +358,20 @@ function ParseMyProject($directory, $file)
 
 		$row->introtext = $introtext;
 		$row->fulltext = $http_article;
-		$row->sectionid = $id_section;
-		$row->publish_up = $publish_up;
-		$row->publish_down = $publish_down;
+
+		$row->sectionid = $id_section[0];
+		$row->catid = $id_section[1];
+		$row->subcatid = $id_section[2];
+
+		$row->images = array ();
+		if(!isset($date_created))
+		{
+			$date_created = $createdate->toMySQL();
+		}
+		$row->publish_up = $date_created;
+		$row->publish_down = $nullDate;
+		$row->created = $date_created; //$createdate->toMySQL();
+		$row->modified = $nullDate;
 		$row->hits =$hits;
 		$row->state = 1; // публиковать
 		$row->created_by = 62;
