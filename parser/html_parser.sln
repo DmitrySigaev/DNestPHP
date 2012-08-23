@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{1863889A-00DF-4350-BA39-669CA949CB81}") = "html_parser", "html_parser.phpproj", "{A326D0D6-447F-4284-B761-3739B899BA4E}"
 EndProject
 Global
